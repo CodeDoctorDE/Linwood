@@ -1,0 +1,234 @@
+$background: #161b1f
+$text: #eee
+$active: #317731
+$panel: #333
+$second-background: rgba(10, 10, 10, 0.95)
+$second-text: #aaa
+$second-active: #8e8
+$third-background: #333
+$third-text: #aaa
+$third-active: #afa
+
+$colors: ("finished": #0ff, "active": #0f0, "paused": #fa0, "dead": #999) 
+
+::-webkit-scrollbar
+  width: 10px
+
+/* Track */
+::-webkit-scrollbar-track
+  background: $panel
+
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: $text
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+  background: $active
+
+@font-face 
+  font-family: "Roboto"
+  src: url('Roboto.ttf')
+html, body
+    margin: 0
+    padding: 0
+    background-color: $background
+    color: $text
+    font-family: 'Roboto'
+    letter-spacing: 0.1em
+.center
+    text-align: center
+.title
+    margin: 0.5em
+@media (min-width: 400px) and (max-width: 1280px)
+    .title
+        font-size: 3em
+@media (min-width: 1281px)
+    .title
+        font-size: 5em
+.subtitle
+    color: $second-text
+@media (min-width: 400px) and (max-width: 1280px)
+    .subtitle
+        font-size: 2em
+@media (min-width: 1281px)
+    .subtitle
+        font-size: 2.5em
+@media (min-width: 1281px)
+    .main
+        margin: 3em 5em
+.main
+    margin-top: 5em
+.topnav
+    list-style-type: none
+    position: fixed
+    margin: 0
+    padding: 0.5em 0
+    top: 0
+    width: 100%
+    text-align: center
+    align-items: center
+    color: $second-text
+    background-color: $second-background
+    z-index: 10
+    overflow: hidden
+    .item
+        display: inline-block
+        align-items: center
+        text-align: center
+        float: none
+        a
+            font-size: 1.25em
+            display: block
+            color: inherit
+            text-decoration: none
+            text-transform: uppercase
+            padding: 0.1em
+            margin: 0.5em
+            transition: all 0.1s ease-out
+            &:hover
+                color: $second-text
+                transform: scale(1.1)
+        &.active
+            a
+                color: $second-active
+    &-icon
+        display: none
+@media screen and (max-width: 600px)
+    .topnav
+        .item
+            display: none
+        &-icon
+            display: block
+            float: right
+        &.responsive
+            .item
+                float: none
+                display: block
+            .topnav-icon
+                position: absolute
+                right: 0
+                top: 0
+                float: none
+                display: block
+                text-align: left
+.icon, .topnav-icon
+    padding: 0.75em
+    margin: 0.5em
+.main-section, .section
+    padding: 5em 0
+    margin: 1em 0
+    min-height: 30em
+.main-section
+    padding: 10em 0
+.section-title
+    text-transform: uppercase
+@media (min-width: 400px) and (max-width: 1280px)
+    .section-title
+        font-size: 2em
+@media (min-width: 1281px)
+    .section-title
+        font-size: 2.5em
+.list,.clist
+    list-style-type: none
+    margin: 0
+    padding: 0
+    .item
+        margin: 0.5em 0
+.clist
+    text-align: center
+    align-items: center
+.card-list
+    display: flex
+    list-style-type: none
+    margin: 0
+    padding: 0
+    align-content: stretch
+    align-items: stretch
+    justify-content: center
+    flex-flow: row wrap
+    flex-wrap: wrap
+    .item
+        @extend .card
+    .flip-item
+        @extend .card-flip
+.card, .card-flip
+    width: 20em
+    display: flex
+    flex-direction: column
+    padding: 1em
+    margin: 1em
+    border: $text solid 0.01em
+.card-flip
+    perspective: 1000px
+    .inner
+        text-align: center
+        transition: transform 0.6s
+        transform-style: preserve-3d
+        width: 100%
+        height: 100%
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+        .front
+            position: relative
+            overflow-y: inherit
+            transform: rotateY(0deg)
+            backface-visibility: hidden
+        .back
+            overflow-y: auto
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            backface-visibility: hidden
+            transform: rotateY(180deg)
+    &:hover .inner
+        transform: rotateY(180deg)
+.button
+    text-decoration: none
+    color: inherit
+    padding: 0.5em
+    margin: 0.25em
+    display: inline-block
+    text-transform: uppercase
+    background-color: $panel
+    transition: all 0.25s ease-out
+    &:hover
+        transform: scale(1.1)
+        box-shadow: 0 5px 1em $active
+        background-color: $active
+.dot 
+  height: 12px
+  width: 12px
+  background-color: #bbb
+  border-radius: 50%
+  padding: 0.1em
+  display: inline-block
+@each $name, $color in $colors
+    .bg-#{$name}
+        background-color: $color
+.bottom-bar
+    margin-top: auto
+.cl
+    display: flex
+    flex-direction: column
+.paper
+    text-align: left
+    background-color: $second-background
+    color: $second-text
+    box-sizing: border-box
+    margin: 0
+    width: 100%
+.progress-bar
+    background-color: $third-background
+    width: 100%
+    padding: 0.25em
+.progress-item
+    background-color: $third-text
+    height: 0.5em
+a
+    text-decoration: inherit
+    color: $second-active
+@for $i from 1 through 20 
+  .wd-#{$i * 5}
+    width: #{$i * 5%}
