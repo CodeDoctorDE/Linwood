@@ -12,7 +12,7 @@
         <property name="hibernate.default_schema">linwood</property>
         <!-- Entity mapping -->
         <mapping class="com.github.codedoctorde.linwood.entity.GuildEntity"/>
-        <mapping class="com.github.codedoctorde.linwood.entity.TemplateEntity"/>
+        <mapping class="com.github.codedoctorde.linwood.entity.WikiEntity"/>
         <mapping class="com.github.codedoctorde.linwood.entity.GameEntity"/>
         <mapping class="com.github.codedoctorde.linwood.entity.MemberEntity"/>
         <mapping class="com.github.codedoctorde.linwood.entity.KarmaEntity"/>

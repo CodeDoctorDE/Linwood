@@ -27,7 +27,7 @@ public class GuildEntity {
     private final GameEntity gameEntity = new GameEntity();
     @OneToMany
     @NotNull
-    private final Set<TemplateEntity> templates = new HashSet<>();
+    private final Set<WikiEntity> wikis = new HashSet<>();
     @OneToOne(cascade={CascadeType.ALL}, optional = false)
     @JoinColumn(name = "karma_id", referencedColumnName = "id")
     private final KarmaEntity karmaEntity = new KarmaEntity();

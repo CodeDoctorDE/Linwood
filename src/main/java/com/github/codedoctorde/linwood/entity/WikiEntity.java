@@ -1,5 +1,7 @@
 package com.github.codedoctorde.linwood.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 /**
@@ -9,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "templates", uniqueConstraints = {
         @UniqueConstraint(columnNames = "ID")
 })
-public class TemplateEntity {
+public class WikiEntity {
     @Column(name="ID", unique = true, nullable = false)
     @Id
     @GeneratedValue
@@ -17,11 +19,13 @@ public class TemplateEntity {
     @ManyToOne
     @JoinColumn(name="server_id", nullable=false)
     private GuildEntity server;
-    @Column(name="templateName", nullable = false)
-    String name;
+    @Column(nullable = false)
+    private String name;
     @Column(name="content", nullable = false, columnDefinition = "TEXT")
     String content;
-    public TemplateEntity(){
+    @Column(nullable = false)
+    private Visibility visibility = Visibility.INTERNAL;
+    public WikiEntity(){
 
     }
 
@@ -43,5 +47,13 @@ public class TemplateEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 }
