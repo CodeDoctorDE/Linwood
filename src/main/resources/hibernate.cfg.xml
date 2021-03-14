@@ -19,5 +19,6 @@
         <mapping class="com.github.codedoctorde.linwood.entity.NotificationEntity"/>
         <mapping class="com.github.codedoctorde.linwood.entity.TeamEntity"/>
         <mapping class="com.github.codedoctorde.linwood.entity.TeamMemberEntity"/>
+        <mapping class="com.github.codedoctorde.linwood.entity.ChannelEntity"/>
     </session-factory>
 </hibernate-configuration>

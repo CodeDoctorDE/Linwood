@@ -7,6 +7,9 @@ import com.github.codedoctorde.linwood.commands.settings.general.GeneralSettings
 import com.github.codedoctorde.linwood.commands.settings.karma.KarmaSettingsCommand;
 import com.github.codedoctorde.linwood.commands.settings.notification.NotificationSettingsCommand;
 import com.github.codedoctorde.linwood.entity.GuildEntity;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -33,6 +36,11 @@ public class SettingsCommand extends CommandManager {
         return new HashSet<>(Arrays.asList(
                 "conf", "config", "setting", "settings"
         ));
+    }
+
+    @Override
+    public boolean hasPermission(Member member, GuildEntity entity, Session session) {
+        return member.hasPermission(Permission.MANAGE_SERVER) || entity.getMaintainerId() != null && member.getRoles().contains(member.getGuild().getRoleById(entity.getMaintainerId()));
     }
 
     @Override

@@ -59,11 +59,6 @@ public class GameCategoryCommand implements Command {
     }
 
     @Override
-    public boolean hasPermission(Member member, GuildEntity entity, Session session) {
-       return member.hasPermission(Permission.MANAGE_SERVER) || entity.getMaintainerId() != null && member.getRoles().contains(member.getGuild().getRoleById(entity.getMaintainerId()));
-    }
-
-    @Override
     public @NotNull Set<String> aliases(GuildEntity entity) {
         return new HashSet<>(Arrays.asList(
                 "gamecategory",

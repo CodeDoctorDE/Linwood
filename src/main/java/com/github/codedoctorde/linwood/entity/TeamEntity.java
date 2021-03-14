@@ -1,5 +1,7 @@
 package com.github.codedoctorde.linwood.entity;
 
+import org.hibernate.Session;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,23 +10,36 @@ import java.util.List;
 @Entity
 public class TeamEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(unique = true)
+    private String name;
     @OneToMany
     private final List<TeamMemberEntity> guilds = new ArrayList<>();
+    @OneToMany
+    private final List<ChannelEntity> channels = new ArrayList<>();
 
     public TeamEntity(){}
-    public TeamEntity(GuildEntity ownerGuild, GuildEntity... memberGuilds){
-        guilds.add(new TeamMemberEntity(ownerGuild, PermissionLevel.OWNER));
-        Arrays.stream(memberGuilds).forEach(guild -> guilds.add(new TeamMemberEntity(guild, PermissionLevel.MEMBER)));
+    public TeamEntity(String name, GuildEntity ownerGuild, GuildEntity... memberGuilds){
+        this.name = name;
+        guilds.add(new TeamMemberEntity(ownerGuild, this, PermissionLevel.OWNER));
+        Arrays.stream(memberGuilds).forEach(guild -> guilds.add(new TeamMemberEntity(guild, this, PermissionLevel.MEMBER)));
     }
 
     public List<TeamMemberEntity> getGuilds() {
         return guilds;
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
+    }
+
+    public void delete(Session session) {
+        session.delete(this);
+    }
+    public ChannelEntity getChannelByName(String name){
+        return channels.stream().filter(channel -> channel.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public List<ChannelEntity> getChannels() {
+        return channels;
     }
 }

@@ -3,7 +3,10 @@ package com.github.codedoctorde.linwood.utils;
 import com.github.codedoctorde.linwood.Linwood;
 import com.github.codedoctorde.linwood.entity.GuildEntity;
 import com.github.codedoctorde.linwood.entity.MemberEntity;
+import com.github.codedoctorde.linwood.entity.TeamEntity;
+import com.github.codedoctorde.linwood.entity.TeamMemberEntity;
 import com.sun.istack.Nullable;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -169,9 +172,36 @@ public class DatabaseUtil {
         return result.get(0);
     }
 
+    public TeamMemberEntity getTeamMember(Session session, GuildEntity entity, TeamEntity team){
+        return getTeamMember(session, entity.getGuildId(), team.getName());
+    }
+
+    public TeamMemberEntity getTeamMember(Session session, Guild guild, TeamEntity team){
+        return getTeamMember(session, guild.getIdLong(), team.getName());
+    }
+
+    public TeamMemberEntity getTeamMember(Session session, long guildId, String teamName){
+        var cb = session.getCriteriaBuilder();
+        var cq = cb.createQuery(TeamMemberEntity.class);
+        var from = cq.from(TeamMemberEntity.class);
+
+        cq = cq.select(from).where(
+                cb.equal(from.get("guildId"), guildId),
+                cb.equal(from.get("teamName"), teamName)
+        );
+        var result = session.createQuery(cq).list();
+        if(result.size() < 1)
+            return null;
+        return result.get(0);
+    }
+
     private MemberEntity createMember(Session session, long guildId, long memberId) {
         var member = new MemberEntity(guildId, memberId);
         member.save(session);
         return member;
+    }
+
+    public TeamEntity getTeam(Session session, String name){
+        return session.get(TeamEntity.class, name);
     }
 }

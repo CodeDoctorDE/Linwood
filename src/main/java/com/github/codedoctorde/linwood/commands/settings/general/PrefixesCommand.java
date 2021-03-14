@@ -40,9 +40,4 @@ public class PrefixesCommand implements Command {
     public @NotNull ResourceBundle getBundle(GuildEntity entity) {
         return ResourceBundle.getBundle("locale.commands.settings.general.Prefixes", entity.getLocalization());
     }
-
-    @Override
-    public boolean hasPermission(Member member, GuildEntity entity, Session session) {
-        return member.hasPermission(Permission.MANAGE_SERVER) || entity.getMaintainerId() != null && member.getRoles().contains(member.getGuild().getRoleById(entity.getMaintainerId()));
-    }
 }

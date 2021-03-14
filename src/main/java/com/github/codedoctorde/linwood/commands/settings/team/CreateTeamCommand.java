@@ -1,4 +1,4 @@
-package com.github.codedoctorde.linwood.commands.settings.karma;
+package com.github.codedoctorde.linwood.commands.settings.team;
 
 import com.github.codedoctorde.linwood.commands.Command;
 import com.github.codedoctorde.linwood.entity.GuildEntity;
@@ -16,29 +16,23 @@ import java.util.Set;
 /**
  * @author CodeDoctorDE
  */
-public class ClearDislikeCommand implements Command {
+public class CreateTeamCommand implements Command {
     @Override
     public boolean onCommand(Session session, Message message, GuildEntity entity, String label, String[] args) {
-        ResourceBundle bundle = getBundle(entity);
-        if(args.length != 0)
+        if(args.length != 1)
             return false;
-        entity.getKarmaEntity().setLikeEmote(null);
-        entity.save(session);
-        message.getChannel().sendMessage(bundle.getString("Clear")).queue();
+        var bundle = getBundle(entity);
+        message.getChannel().sendMessageFormat(bundle.getString(entity.createTeam(session, args[0]) ?"Success":"Error"), args[0]);
         return true;
     }
 
     @Override
     public @NotNull Set<String> aliases(GuildEntity entity) {
-        return new HashSet<>(Arrays.asList(
-                "cleardislike",
-                "clear-dislike",
-                "clear-dis-like"
-        ));
+        return new HashSet<>(Arrays.asList("create", "c"));
     }
 
     @Override
     public @NotNull ResourceBundle getBundle(GuildEntity entity) {
-        return ResourceBundle.getBundle("locale.commands.settings.karma.ClearDislike", entity.getLocalization());
+        return ResourceBundle.getBundle("locale.commands.settings.team.Create", entity.getLocalization());
     }
 }

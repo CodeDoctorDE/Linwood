@@ -2,6 +2,7 @@ package com.github.codedoctorde.linwood.entity;
 
 import com.github.codedoctorde.linwood.Linwood;
 import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import net.dv8tion.jda.api.entities.Role;
 import org.hibernate.Session;
 
@@ -23,6 +24,7 @@ public class GuildEntity {
     private final Set<String> prefixes = new HashSet<>(Linwood.getInstance().getConfig().getPrefixes());
     private String locale = Locale.ENGLISH.toLanguageTag();
     @OneToOne(cascade={CascadeType.ALL}, optional = false)
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     private final GameEntity gameEntity = new GameEntity();
     @OneToMany
@@ -113,8 +115,32 @@ public class GuildEntity {
         this.plan = plan;
     }
     public boolean addPrefix(String prefix){
-        if(plan.getPrefixLimit() == -1 || plan.getPrefixLimit() <= getPrefixes().size() + 1)
+        if(plan.getPrefixLimit() < 0 || plan.getPrefixLimit() <= getPrefixes().size() + 1)
             return getPrefixes().add(prefix);
         return false;
+    }
+    public boolean createTeam(Session session, String name){
+        if(plan.getTeamLimit() < 0 || plan.getTeamLimit() <= 1)
+            return false;
+        var team = new TeamEntity(name, this);
+        session.saveOrUpdate(team);
+        return true;
+    }
+    public TeamMemberEntity[] getTeams(Session session){
+        return getTeams(session, null);
+    }
+    public TeamMemberEntity[] getTeams(Session session, @Nullable PermissionLevel level){
+// Create CriteriaBuilder
+        var builder = session.getCriteriaBuilder();
+
+// Create CriteriaQuery
+        var cq = builder.createQuery(TeamMemberEntity.class);
+        var team = cq.from(TeamMemberEntity.class);
+        var all = cq.select(team);
+        all.where(builder.equal(team.get("guild"), this));
+        all.where(builder.notEqual(team.get("level"), PermissionLevel.INVITED));
+        if(level != null)
+            all.where(builder.equal(team.get("level"), level));
+        return session.createQuery(all).getResultList().toArray(new TeamMemberEntity[0]);
     }
 }
