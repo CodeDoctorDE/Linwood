@@ -25,6 +25,10 @@ public class MainConfig {
         add(new ActivityConfig(Activity.ActivityType.DEFAULT, "with %2$s players"));
     }};
     private String supportURL = "https://discord.gg/97zFtYN";
+    private String redirectURI = "https://app.linwood.tk/#/callback";
+    private String token = "";
+    private String clientId = "";
+    private String clientSecret = "";
 
     public MainConfig(){
 
@@ -72,5 +76,41 @@ public class MainConfig {
 
     public Set<Long> getOwners() {
         return owners;
+    }
+
+    public String getRedirectURI() {
+        return redirectURI;
+    }
+
+    public void setRedirectURI(String redirectURI) {
+        this.redirectURI = redirectURI;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

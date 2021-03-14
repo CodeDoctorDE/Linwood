@@ -45,23 +45,12 @@ public class Linwood {
 
 
     public static void main(String[] args) {
-        new Linwood(args[0]);
+        new Linwood();
     }
-    public Linwood(String token){
+    public Linwood(){
         instance = this;
         Sentry.init();
         sentry = SentryClientFactory.sentryClient();
-        var builder = JDABuilder.createDefault(token)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES)
-                .setEventManager(new AnnotatedEventManager())
-                .addEventListeners(new CommandListener())
-                .addEventListeners(userListener)
-                .addEventListeners(new NotificationListener())
-                .addEventListeners(new ConnectionListener());
-        activityChanger = new ActivityChanger();
-        baseCommand = new BaseCommand();
-        gameManager = new SingleApplicationManager();
-        audioManager = new SingleApplicationManager();
 
         // Read config file
         if(!configFile.exists()){
@@ -82,6 +71,17 @@ public class Linwood {
         if(config == null)
             config = new MainConfig();
         saveConfig();
+        var builder = JDABuilder.createDefault(config.getToken())
+                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES)
+                .setEventManager(new AnnotatedEventManager())
+                .addEventListeners(new CommandListener())
+                .addEventListeners(userListener)
+                .addEventListeners(new NotificationListener())
+                .addEventListeners(new ConnectionListener());
+        activityChanger = new ActivityChanger();
+        baseCommand = new BaseCommand();
+        gameManager = new SingleApplicationManager();
+        audioManager = new SingleApplicationManager();
         database = new DatabaseUtil();
         try {
             jda = builder.build();
