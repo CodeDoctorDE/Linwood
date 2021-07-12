@@ -9,4 +9,4 @@ markdown_extensions:
 nav:
   - Home: "wiki/index.md"
   - Teams:
-      - Commands: "wiki/teams/commands"
+      - Commands: "wiki/teams/com.github.linwoodcloud.bot.linwood.karma.commands"

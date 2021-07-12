@@ -4,10 +4,10 @@
 
 | Version | Supported                           |
 | ------- | ----------------------------------- |
-| 1.0.x   | :white_check_mark: (in development) |
-| < 0.1   | :x:                                 |
+| 2.0.x   | :warning: (in development)          |
+| 1.0.x.x | :warning: (no updates)              |
 
 ## Reporting a Vulnerability
 
 Use the issues to report bugs, ...
-I will be looked in it and fix it as fast as possible!
+I will look in it and fix it as fast as possible!
